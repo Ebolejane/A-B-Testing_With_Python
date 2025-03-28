@@ -37,7 +37,57 @@ Before running an A/B test, we need to know how many users should be included in
 
 3. Significance Level (α) – How much error are we okay with. This is the chance of a false positive—seeing a difference when none exists.It is usually set at 5% (0.05). Meaning we are 95% confident that the results are real and not due to randomness. If α is too high, we might think the new design is better when it’s actually not. And if α is too low, we may miss real improvements.
 
-4. Statistical Power (1 - β) – How confident are we in detecting a real difference?
+4. Statistical Power (1 - β) – How confident are we in detecting a real difference?. statistial power is the ability to to detect a true difference if it exists. It is commonly set at 80% (0.8). This means if the new design actually performs better, there is an 80% chance we will detect it. If power is too low, we might miss improvements that actually exist. And increasing power requires more users in the test
+
+To calculate the required sample size per group for an A/B test in Python, you can use the statsmodels library, which has a built-in function for power analysis.
+
+from statsmodels.stats.power import NormalIndPower
+from statsmodels.stats.proportion import proportion_effectsize
+
+# Given parameters
+baseline_ctr = 0.05  # 5% baseline conversion rate
+mde = 0.01           # Minimum detectable effect (1% increase)
+alpha = 0.05         # Significance level (5%)
+power = 0.8          # Statistical power (80%)
+
+# Compute effect size (Cohen's h)
+effect_size = proportion_effectsize(baseline_ctr, baseline_ctr + mde)
+
+# Calculate required sample size per group
+sample_size = NormalIndPower().solve_power(effect_size, power=power, alpha=alpha, ratio=1)
+
+print(f"Required sample size per group: {round(sample_size)}")
+print(f"Total required sample size (both groups): {round(sample_size) * 2}")
+
+**Output**
+Required sample size per group: 3902
+Total required sample size (both groups): 7804
+
+**Determine Duration**
+Once we have determined the sample size, the next step is to calculate how long the test should run. The test duration depends on: The number of users needed per variant (from sample size calculation), Average daily traffic (The number of visitors expected per day) and Traffic split that is the percentage of traffic assigned to each variant (e.g., 50/50 split). Given the sample size calculated sample size (7804), lets assume the daily traffic to be 2000, and the traffic split 50/50 using python the test duration is calculated thus:
+
+# Given values
+sample_size_per_group = 3902  # Sample size per group
+total_sample_size = sample_size_per_group * 2  # Both groups (A & B)
+daily_traffic = 2000  # Daily visitors
+traffic_split = 0.5  # 50% traffic per variant
+
+# Calculate test duration
+test_duration = total_sample_size / (daily_traffic * traffic_split)
+test_duration = round(test_duration)  # Round up to full days
+
+print(f"Estimated test duration: {test_duration} days")
+
+**output**
+Estimated test duration: 8 days
+
+## *5 Define the Hypothesis
+
+## *6. Implement the Test*  
+Deploy both versions (A and B) while ensuring proper tracking.  Monitor for technical issues or unintended biases during the test.  
+
+Once these steps are completed, the experiment can run, and data can be collected for analysis.
+
 
 
 
