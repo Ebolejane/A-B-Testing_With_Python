@@ -41,6 +41,7 @@ Before running an A/B test, we need to know how many users should be included in
 
 To calculate the required sample size per group for an A/B test in Python, you can use the statsmodels library, which has a built-in function for power analysis.
 
+```
 from statsmodels.stats.power import NormalIndPower
 from statsmodels.stats.proportion import proportion_effectsize
 
@@ -76,7 +77,8 @@ traffic_split = 0.5  # 50% traffic per variant
 test_duration = total_sample_size / (daily_traffic * traffic_split)
 test_duration = round(test_duration)  # Round up to full days
 
-print(f"Estimated test duration: {test_duration} days") ` ` `
+print(f"Estimated test duration: {test_duration} days")
+```
 
 **output**
 Estimated test duration: 8 days
