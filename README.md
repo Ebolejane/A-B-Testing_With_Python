@@ -59,6 +59,7 @@ sample_size = NormalIndPower().solve_power(effect_size, power=power, alpha=alpha
 
 print(f"Required sample size per group: {round(sample_size)}")
 print(f"Total required sample size (both groups): {round(sample_size) * 2}")
+```
 
 **Output**
 Required sample size per group: 3902
@@ -67,7 +68,8 @@ Total required sample size (both groups): 7804
 **Determine Duration**
 Once we have determined the sample size, the next step is to calculate how long the test should run. The test duration depends on: The number of users needed per variant (from sample size calculation), Average daily traffic (The number of visitors expected per day) and Traffic split that is the percentage of traffic assigned to each variant (e.g., 50/50 split). Given the sample size calculated sample size (7804), lets assume the daily traffic to be 2000, and the traffic split 50/50 using python the test duration is calculated thus:
 
- ` ` `# Given values
+```
+# Given values
 sample_size_per_group = 3902  # Sample size per group
 total_sample_size = sample_size_per_group * 2  # Both groups (A & B)
 daily_traffic = 2000  # Daily visitors
