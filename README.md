@@ -92,8 +92,39 @@ Deploy both versions (A and B) while ensuring proper tracking.  Monitor for tech
 
 Once these steps are completed, the experiment can run, and data can be collected for analysis.
 
+## Generating the synthetic data set for this project
 
+```
+!pip install faker
 
+import pandas as pd
+from faker import Faker
+import random
+from datetime import datetime, timedelta
+
+# Initialize Faker
+fake = Faker()
+
+# Set the number of samples
+num_samples = 10000
+
+# Generate synthetic data
+data = {
+    'user_id': [fake.uuid4() for _ in range(num_samples)],
+    'click': [random.randint(0, 1) for _ in range(num_samples)],
+    'group': [random.choice(['control', 'test']) for _ in range(num_samples)],
+    'timestamp': [fake.date_time_between(start_date='-1y', end_date='now') for _ in range(num_samples)]
+}
+
+# Create a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# Print the first few rows of the DataFrame
+print(df.head())
+
+# Save the DataFrame to a CSV file
+df.to_csv('synthetic_data.csv', index=False)
+```
 
 
 
