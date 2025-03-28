@@ -41,7 +41,7 @@ Before running an A/B test, we need to know how many users should be included in
 
 To calculate the required sample size per group for an A/B test in Python, you can use the statsmodels library, which has a built-in function for power analysis.
 
-from statsmodels.stats.power import NormalIndPower
+ ` ` `from statsmodels.stats.power import NormalIndPower
 from statsmodels.stats.proportion import proportion_effectsize
 
 # Given parameters
@@ -57,7 +57,7 @@ effect_size = proportion_effectsize(baseline_ctr, baseline_ctr + mde)
 sample_size = NormalIndPower().solve_power(effect_size, power=power, alpha=alpha, ratio=1)
 
 print(f"Required sample size per group: {round(sample_size)}")
-print(f"Total required sample size (both groups): {round(sample_size) * 2}")
+print(f"Total required sample size (both groups): {round(sample_size) * 2}") ` ` `
 
 **Output**
 Required sample size per group: 3902
@@ -66,7 +66,7 @@ Total required sample size (both groups): 7804
 **Determine Duration**
 Once we have determined the sample size, the next step is to calculate how long the test should run. The test duration depends on: The number of users needed per variant (from sample size calculation), Average daily traffic (The number of visitors expected per day) and Traffic split that is the percentage of traffic assigned to each variant (e.g., 50/50 split). Given the sample size calculated sample size (7804), lets assume the daily traffic to be 2000, and the traffic split 50/50 using python the test duration is calculated thus:
 
-# Given values
+ ` ` `# Given values
 sample_size_per_group = 3902  # Sample size per group
 total_sample_size = sample_size_per_group * 2  # Both groups (A & B)
 daily_traffic = 2000  # Daily visitors
@@ -76,7 +76,7 @@ traffic_split = 0.5  # 50% traffic per variant
 test_duration = total_sample_size / (daily_traffic * traffic_split)
 test_duration = round(test_duration)  # Round up to full days
 
-print(f"Estimated test duration: {test_duration} days")
+print(f"Estimated test duration: {test_duration} days") ` ` `
 
 **output**
 Estimated test duration: 8 days
