@@ -41,14 +41,14 @@ Before running an A/B test, we need to know how many users should be included in
 
 To calculate the required sample size per group for an A/B test in Python, you can use the statsmodels library, which has a built-in function for power analysis.
 
- ` ` `from statsmodels.stats.power import NormalIndPower
+from statsmodels.stats.power import NormalIndPower
 from statsmodels.stats.proportion import proportion_effectsize
 
 # Given parameters
 baseline_ctr = 0.05  # 5% baseline conversion rate
-mde = 0.01           # Minimum detectable effect (1% increase)
-alpha = 0.05         # Significance level (5%)
-power = 0.8          # Statistical power (80%)
+mde = 0.01  # Minimum detectable effect (1% increase)
+alpha = 0.05  # Significance level (5%)
+power = 0.8  # Statistical power (80%)
 
 # Compute effect size (Cohen's h)
 effect_size = proportion_effectsize(baseline_ctr, baseline_ctr + mde)
@@ -57,7 +57,7 @@ effect_size = proportion_effectsize(baseline_ctr, baseline_ctr + mde)
 sample_size = NormalIndPower().solve_power(effect_size, power=power, alpha=alpha, ratio=1)
 
 print(f"Required sample size per group: {round(sample_size)}")
-print(f"Total required sample size (both groups): {round(sample_size) * 2}") ` ` `
+print(f"Total required sample size (both groups): {round(sample_size) * 2}")
 
 **Output**
 Required sample size per group: 3902
